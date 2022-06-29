@@ -1,9 +1,23 @@
 import { Estudiante } from "./estudiante";
 import { Mentor } from "./mentor";
 
-export class Conferencia {
+interface IConferencia {
+    nombreConferencia: string;
+    aforo: number;
+    }
+
+abstract class conferenceContent implements IConferencia{
     public nombreConferencia: string;
-    public aforo: 100;
+    public aforo: number;
+    protected constructor(nombreConferencia: string, aforo: number) {
+        this.nombreConferencia = nombreConferencia;
+        this.aforo = aforo;
+    }
+    abstract getMentor(): Mentor
+    abstract getEstudiantes(): Estudiante[]
+}
+
+export class Conferencia extends conferenceContent{
     protected mentor: Mentor;
     protected estudiantes: Estudiante[];
 
@@ -12,6 +26,7 @@ export class Conferencia {
         aforo: 100,
         mentor: Mentor
     ) {
+        super(nombreConferencia, aforo)
         this.nombreConferencia = nombreConferencia;
         this.aforo = aforo;
         this.mentor = mentor;
